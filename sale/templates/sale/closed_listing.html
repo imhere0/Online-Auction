@@ -1,0 +1,34 @@
+
+{% extends "sale/layout.html" %}
+
+
+{% block body %}
+<div class = "container">
+    {%if message %}
+        <h2 style = "font-family: arial, sans-serif">{{message}}</h2>
+
+    {% else %}    
+    <h2 style = "font-family: arial, sans-serif">Closed Listings</h2>
+    {% for post in posts %}
+        
+            <div class ="card" style = "width:100%"></div>
+                <h3 class = "card-title">{{ post.title }}</h3>
+                <img class="card-img-top" src= "{{ post.image.url }}" alt="Card image cap"  style = "width: 15%">
+                <div class="card-body">
+                    <p class = "card-text-justify"> {{post.description}} </p>
+                </div>
+                
+                <h5 class = "card-title-justify">Price: ${{post.price}}</h5>
+                <a href="{% url 'title' post.id %}" class="btn btn-primary">View Listing</a>
+
+                <div class="card-footer text-muted">
+                    created by {{post.seller}} at {{post.time}}
+                  </div>
+                  
+                    
+
+    {% endfor %}
+    {% endif %}
+    </div>
+
+{% endblock %}

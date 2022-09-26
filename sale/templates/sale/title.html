@@ -1,0 +1,129 @@
+{% extends "sale/layout.html" %}
+
+{% block body %}
+<div class = "container">
+    {% if message %}
+        <div>
+            <h3>{{message}}</h3>
+        </div>
+    {% endif %}
+
+    <h2>{{post.title}}</h2>
+
+    <br>
+
+    <img class = "card-img-top" src = "{{ post.image.url }}"  style = "width:15%">
+
+    <br>
+        <div class="card-body">
+            <p class = "card-text-justify"> {{post.description}} </p>
+        </div>
+
+        <div >
+            <table>
+                <tr>
+                    <td>
+                        <h5 style="font-family: Cambria;">Current Price:</h5>
+                    </td>
+                    <td>
+                        <h5 style="font-family: Cambria;" id = "price"> ${{post.price}}</h5>
+                    </td>
+                </tr>
+                
+            </table>
+
+            <p class = "card-text m-10">Created by {{post.owner}} on {{post.time}}</p>
+                
+        </div>
+        
+        
+    
+        <div>
+            <p id="error" class = "message">
+
+            </p>
+        </div>
+    
+    
+
+    {% if user.is_authenticated %}
+
+        {% if bid_message %}
+
+            
+            
+            {%if bids %}
+                <h6>Highest Bid(current price) is bidded by {{bids.user_id.username}}</h6>
+            {% endif%}
+            
+
+            <form action = "{% url 'title' post.id%}" method = "POST">
+                {% csrf_token %}
+                <label>Enter your Bid:</label>
+                <div class = "form-group">
+                <input type = "text" name = "bid" id = "bid" class = "form-control" placeholder = "Bid must be greater than current price">
+                </div>
+                <input type = "submit" onclick = "validatebid()"  class="btn btn-primary" value = "Place Bid">
+            </form>
+
+
+            {% if post.owner|stringformat:"s" == user.get_username|stringformat:"s" %}
+                <div class = "center">
+                    <form action = "{% url 'title' post.id %}" method = "POST">
+                        {% csrf_token %}
+                        <button type = "submit" name = "bidclose" value = "bidclose" class = "btn btn-secondary">Close Bid</button>
+                    </form>
+                </div>
+            {% endif %}    
+        
+        {% else %}
+     
+            {% if user.get_username|stringformat:"s" == winner.winner|stringformat:"s" %}
+                <h4 class = "congrats">Congrats! You have won the auction </h3>
+                <br>
+                
+                <form action = "{% url 'remove' post.id%}" method="POST">
+                    <h5 class = "congrats" >Do you want to remove the item from Auction?</h3>
+                    {% csrf_token %}
+                    <button type = "submit" name = "listingremove"  value = "listingremove" class = "btn btn-secondary">Remove From Auction</button>    
+                </form>
+            {% else %}
+
+                <h4 class = "text-center message"style = "font-family: Cambria">The auction of this item has been closed and it will be  removed  soon.</h4>
+                <h5 class = "text-center message">{{winner.owner}} has sold it to {{winner.winner}} at ${{winner.price}} </h5>
+
+            {% endif %}
+
+        {% endif %}    
+        <br>        
+       <form action = "{% url 'title' post.id %}" method = "POST">
+        {% csrf_token %}
+           <label>Add a Comment</label>
+           <div class = "form-group">
+               <textarea class = "form-control" name = "comment" placeholder="Comment about the Listing" rows="5"></textarea>
+               
+           </div>
+           <input class="btn btn-primary" type="submit" value="Add Comment">
+       </form> 
+
+    {% else %}
+        <h4>Sign in to place bid</h4>
+    {% endif %}
+
+    {% if comments %}
+    <br>
+       {% for comment in comments %}
+        <div style = "font-family: arial, sans-serif;font-size:large">
+            {{comment.comment}}
+        </div>
+            
+        <p class = "card-text">Added by {{comment.user_id.username}} on {{comment.time}}</p>
+        <br>
+
+        {% endfor %}
+    {% endif%}
+</div>
+   
+
+{% endblock %}    
+    

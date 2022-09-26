@@ -1,0 +1,81 @@
+
+.flex{
+    
+    width: 50%;
+    
+    
+  }
+  
+  
+  form{
+    width: 80%;
+    padding : 5% 10%;
+    border: 1px solid #f9f9f9;
+    background-color: #ffff;
+  }
+
+  .message{
+    padding-top: 5%;
+    color: red;
+  }
+
+  h1,h2,h5,h6{
+    font-family: 'Cambria';
+  }
+
+  .center{
+    margin: 0 auto;
+  }
+
+  .flex-container, .flex{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  td{
+    padding: 10px;
+  }
+  .m-10{
+    margin-left: 10px;
+  }
+
+  .congrats{
+    color: #0047AB;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .topnav {
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  } */
+  
+  .topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+  
+  .topnav-right {
+    float: right;
+  }
+  

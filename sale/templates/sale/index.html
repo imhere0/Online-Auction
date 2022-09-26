@@ -1,0 +1,38 @@
+{% extends "sale/layout.html" %}
+
+{% block body %}
+    
+    <div class = "container">
+        <h2>Active Listings</h2>
+    {% for post in posts %}
+
+        
+            <div class ="card" style = "width:100%"></div>
+                <h3 class = "card-title text-center">{{ post.title }}</h3>
+                <img class="card-img-top" src= "{{ post.image.url }}" alt="Card image cap"  style = "width: 15%">
+                <div class="card-body">
+                    <p class = "card-text-justify"> {{post.description}} </p>
+                </div>
+                <div class = flex-container>
+                    <table>
+                        <tr>
+                            <td>
+                                <h5 class = "card-title-justify">Current Price: ${{post.price}}</h5>
+                            </td>
+                            <td>
+                                <a href="{% url 'title' post.id %}" class="btn btn-primary">View Listing</a>
+                            </td>
+                        </tr>
+                    </table>   
+                </div>
+                
+                
+
+                <div class="card-footer text-muted">
+                    listed by {{post.owner}} at {{post.time}}
+                </div>
+                          
+    {% endfor %}
+    </div>
+
+{% endblock %}
